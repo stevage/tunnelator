@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Tunnelator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'> -->
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="page-header">
+      <h1>The Tunnelator</h1>
+      <i>Is a firewall ruining your day? An SSH tunnel can help.</i>
+      <!-- ##TODO add SEO text-->
+      
+      <a id="helptext" href="#"
+      data-toggle="popover" 
+      data-content="A special feature of an SSH connection. It lets you pass other kinds of internet traffic. You can use it to solve problems where one machine can connect
+      to something, but another can't. If you have a remote server you can SSH to, give it a go!"
+      
+      >(what's a tunnel?)</a>
+
+    </div>
+    
+    <div class="row">
+      <div class="span2">
+        <div class="well">
+          <legend>Local PC</legend>
+          <img src="LAPTOP_Clipart_Free.png"
+          style="width: 100%; height: 100%;"/>
+        </div>
+      </div>
+
+      <div class="span1">
+        <!--
+        <div class="progress">
+          <div class="bar bar-success" style="width: 100%;"></div>
+        </div>
+        <i class="icon-arrow-right"></i>
+      -->
+      </div>
+      <div class="span3" >
+
+        <form class="well" style="position: relative; ">
+        <img src="http://openclipart.org/people/ajith/ajith_stacked_servers.svg" 
+        style="width: 40%; height: 50%; 
+        position: absolute;
+        right: 0.5em;
+        bottom: 0em; 
+        z-index: 0;"/>
+        <fieldset>
+            <legend>Remote server</legend>
+            <label class="control-label" for="ip">IP</label>
+            <input type="text" id="remote-ip" placeholder="192.168.0.2" class="input-medium">
+            <label>Port</label>
+            <input type="text" id="remote-port" placeholder="22" class="input-small">
+            <label>Username</label>
+            <input type="text" id="remote-user" placeholder="ubuntu" class="input-small">
+          </fieldset>
+        </form>
+      </div>
+      <div class="span5 offset1">
+        <div class="well">
+          <ul class="nav nav-tabs">
+            <li class="dropdown active">
+              <a href="#" id="soican-btn" class="dropdown-toggle" data-toggle="dropdown">
+                So I can...<b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu" id="soican-choices">
+                <li>
+                 <a href="#soican-nothing" data-toggle="tab">So I can...</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                 <a href="#soican-serverhere" data-toggle="tab">Reach a web server on this machine</a>
+                </li>
+                <li>
+                 <a href="#soican-email" data-toggle="tab">Read and send email</a>
+                </li>
+                <li>
+                 <a href="#soican-web" data-toggle="tab">Access the web</a>
+                </li>
+                <li>
+                 <a href="#soican-shareweb" data-toggle="tab">Get web access on a firewalled server</a>
+                </li>
+                <li>
+                 <a href="#soican-hop" data-toggle="tab">Hop to another SSH server</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade" id="soican-nothing">
+            </div>
+            <div class="tab-pane fade" id="soican-serverhere">
+            <span class="help-block">
+              Now you can get to a server running on a port that can't be reached directly from the outside world.<br/><br/>
+              What port is that server running on?
+            </span>
+              <label>Port</label>
+              <input type="text" class="target-port" placeholder="8000">
+          
+            </div>
+            <div class="tab-pane fade" id="soican-email">
+              <span class="help-block">
+                Your hotel wi-fi won't let you send email? Try tunnelling to a friendly server that will!
+              </span>
+              <div class="control-group">
+                <label>SMTP server</label>
+                <input type="text" class="target-ip" placeholder="mail.google.com">
+                <label>SMTP port</label>
+                <input type="text" class="target-port" placeholder="25">
+              </div>
+              <div class="control-group">
+                <label>POP/IMAP server</label>
+                <input type="text" class="target2-ip" placeholder="mail.google.com">
+                <label>POP/IMAP port</label>
+                <input type="text" class="target2-port" placeholder="110">
+              </div>
+            </div>
+            <div class="tab-pane fade" id="soican-web">
+              <span class="help-block">
+                Your corporate ITS blocks FaceBook? Tunnel your web traffic through another server instead.
+              </span>
+
+              You'll need a proxy server, too.<br/><br/>
+
+              <div class="accordion" id="remote-proxy-options">
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#remote-proxy-options" href="#remote-proxy-here">
+                      There's one on this server.
+                    </a>
+                  </div>
+                  <div id="remote-proxy-here" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <form class="form-inline">
+                        <label class="control-inline">Port</label>
+                        <!-- ##todo set remote-proxy-host to 'localhost' -->
+                        <input type="text" class="remote-proxy-port input-mini" placeholder="8080">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#remote-proxy-options" href="#remote-proxy-near">
+                      I can reach one from here.
+                    </a>
+                  </div>
+                  <div id="remote-proxy-near" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                    <form class="form-inline">
+                      
+                    <label style = "width: 3em;">IP</label>
+                    <input type="text" class="remote-proxy-ip" placeholder="proxy.mycompany.org">
+                    </form>
+                    <form class="form-inline">
+                      
+
+                    <label style = "width: 3em;">Port</label>
+                    <input type="text" class="remote-proxy-port" placeholder="8080">
+                  </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#remote-proxy-options" href="#remote-proxy-create">
+                      Can't we use SSH to do this?
+                    </a>
+                  </div>
+                  <div id="remote-proxy-create" class="accordion-body collapse">
+                    <div class = "accordion-inner">
+                      <!-- ## TODO: add tips for proxychains or other method of using this proxy. -->
+                      <p>Ugh. This <i>might</i> work. But it will only be a SOCKS5 proxy, so no Git or Wget.</p>
+                      <p>If it doesn't work, try <a href="https://help.github.com/articles/using-ssh-agent-forwarding">GitHub's troubleshooter</a>. Particularly the bit about adding your identity to the agent.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="soican-shareweb">
+              <span class="help-block">
+                Trying to install stuff on a server that has no web access? Share your own web connection, using a reverse tunnel!
+                <br/>
+                <br/>
+                Caveat: it's only SOCKS5 proxy. No Git, no Wget.
+                <br/>
+              </span>
+              
+
+            </div>
+            <div class="tab-pane fade" id="soican-hop">
+              <span class="help-block">
+                Really want to get to firewalled server, but need to ssh into a gateway server first? Use agent forwarding to make it seamless.
+                <br/>
+                <br/>
+
+                (Caveat: only works if you're using public keys on both servers.)</span>
+              
+              <label>IP</label>
+              <input type="text" class="target-ip" placeholder="192.168.0.3">
+              <label>Port</label>
+              <input type="text" class="target-port" placeholder="22">
+            
+            </div>
+          </div>
+
+        <button class="btn btn-large btn-primary btn-block" id="tunnel-btn" 
+        style="display:none;">
+          Tunnelate!
+        </button>
+
+        </div>
+
+      </div>
+  
+    </div>
+
+    <div class="row" id="output-container" style="display:none;">
+      <div class="span12">
+        <div class="well">
+          <h2>What to do</h2>
+          <ol>
+            <li id="local-step">
+              Type this on your local PC:
+              <code id="local-code" style="background: black; display: block; padding: 1em;">
+                ssh ...
+              </code>
+              <br/>
+            </li>
+            <li id="remote-step">   
+              Type this on the server:
+              <code id="code-remote" style="background: black; display: block;">
+                ssh ...
+              </code>
+            </li>
+            <li id="using-step">
+              <span id="using-text">Browse to this address:</span>
+              <code id="code-using">http://localhost:8000</code>
+            </li>
+          </ol>
+          <!-- ## todo: add "save this tunnel in my .ssh/config" -->
+        </div>
+      </div>
+      <div class="offset5"></div>
+    </div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/tunnelate.js"></script>
+  </body>
+</html>
